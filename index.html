@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>云贵旅游攻略</title>
+    <style>
+        :root {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        header {
+            background: linear-gradient(135deg, #4b6cb7, #182848);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        .nav-container {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .nav {
+            display: flex;
+            justify-content: center;
+            background-color: rgba(51, 51, 51, 0.95);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        .nav.scrolled {
+            padding: 0.5rem 0;
+            background-color: rgba(40, 40, 40, 0.98);
+        }
+        .nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 2rem;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .nav a:hover {
+            color: #4b6cb7;
+            transform: translateY(-2px);
+        }
+        .nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            background-color: #4b6cb7;
+            transition: all 0.3s ease;
+        }
+        .nav a:hover::after {
+            width: 60%;
+            left: 20%;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        .city-section {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            overflow: hidden;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.6s ease;
+        }
+        .city-section.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .city-header {
+            padding: 1.5rem;
+            color: white;
+            font-size: 1.8rem;
+            transition: all 0.3s ease;
+        }
+        .city-header:hover {
+            padding-left: 2rem;
+        }
+        .city-content {
+            padding: 1.5rem;
+        }
+        .category {
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        .category:hover {
+            transform: translateX(5px);
+        }
+        h3 {
+            border-bottom: 2px solid #eee;
+            padding-bottom: 0.5rem;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+        h3:hover {
+            color: #4b6cb7;
+            border-color: #4b6cb7;
+        }
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: #333;
+            color: white;
+        }
+        
+        /* 返回顶部按钮 */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: rgba(75, 108, 183, 0.8);
+            color: white;
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            line-height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        .back-to-top:hover {
+            background-color: rgba(75, 108, 183, 1);
+            transform: translateY(-5px);
+        }
+            
+        .travel-time {
+            font-size: 0.9rem;
+            color: #666;
+            margin-left: 5px;
+        }
+        .travel-link {
+            color: #333;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        .travel-link:active {
+            background-color: #f0f0f0;
+        }
+            
+        /* 新增的行程样式 */
+.day-schedule {
+    margin-bottom: 30px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+.day-title {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.time-note {
+    margin-bottom: 10px;
+    color: #666;
+}
+
+.time-period {
+    font-weight: bold;
+    margin: 10px 0 5px 0;
+    color: #444;
+}
+
+.food-options {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 10px 0;
+    padding: 0;
+}
+
+.food-location {
+    font-size: 1.1rem;
+    margin: 0 5px;
+    color: #333;
+    cursor: pointer;
+}
+
+.food-separator {
+    margin: 0 5px;
+    color: #666;
+}
+.schedule-item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.location, .location.travel-link {
+    padding: 8px 0;
+    margin: 5px 0;
+    font-weight: 500;
+    font-size: 1.1rem;
+    background-color: transparent !important;
+    border: none !important;
+    color: #333;
+}
+
+
+.travel-method {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 5px;
+}
+
+.arrow {
+    font-size: 1.2rem;
+    color: #4b6cb7;
+}
+
+.time-options {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.8rem;
+    color: #666;
+    text-align: center;
+}
+
+.time-options div {
+    margin: 2px 0;
+}
+
+/* 美食相关样式 */
+.food-category {
+    margin-bottom: 1.5rem;
+}
+.food-category-title {
+    font-size: 1.5rem;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 0.8rem;
+    border-bottom: 2px solid #4b6cb7;
+    padding-bottom: 0.3rem;
+}
+.food-item {
+    display: inline-block;
+    margin-right: 15px;
+    margin-bottom: 8px;
+    color: #333;
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+.food-item:hover {
+    background-color: #f0f0f0;
+    text-decoration: underline;
+    color: #4b6cb7;
+}
+
+/* 修改后的美食详情弹窗样式 */
+.food-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    z-index: 2000;
+    justify-content: center;
+    align-items: flex-start;
+    overflow-y: auto;
+    padding: 20px 0;
+}
+
+.food-modal-content {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    max-width: 90%;
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    position: relative;
+    margin: 20px auto;
+    top: 0;
+    transform: none;
+}
+
+.food-modal-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
+}
+
+.food-modal-title {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #4b6cb7;
+    padding-bottom: 0.5rem;
+}
+
+.food-modal-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}
+
+.food-modal-desc {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #555;
+}
+
+/* 移动设备专用样式 */
+@media (max-width: 768px) {
+    .schedule-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .travel-method {
+        margin: 5px 0;
+        flex-direction: row;
+        align-items: center;
+    }
+    
+    .time-options {
+        flex-direction: row;
+        margin-left: 10px;
+    }
+    
+    .time-options div {
+        margin: 0 5px;
+    }
+    
+    .food-options {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .food-separator {
+        display: none;
+    }
+    
+    .food-location {
+        margin: 5px 0;
+        display: block;
+    }
+    
+    .day-schedule {
+        padding: 10px;
+    }
+
+    /* 移动设备弹窗样式 */
+    .food-modal {
+        align-items: flex-start;
+        padding: 10px 0;
+    }
+    
+    .food-modal-content {
+        max-width: 95%;
+        max-height: 90vh;
+        padding: 1rem;
+        margin: 10px auto;
+    }
+    
+    .food-modal-title {
+        font-size: 1.4rem;
+    }
+    
+    .food-modal-image {
+        height: 150px;
+    }
+    
+    .food-modal-desc {
+        font-size: 1rem;
+    }
+}
+            .food-item {
+            position: relative;
+            display: inline-block;
+            margin-right: 15px;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+        
+        .food-popup {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            z-index: 100;
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            width: 300px;
+            max-width: 90vw;
+            border: 1px solid #ddd;
+        }
+        
+        .food-popup-title {
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #4b6cb7;
+            padding-bottom: 5px;
+        }
+        
+        .food-popup-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        
+        .food-popup-desc {
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #555;
+        }
+        
+        /* 移动端适配 */
+        @media (max-width: 768px) {
+            .food-popup {
+                width: 90vw;
+                left: 5vw;
+            }
+        }
+
+</style>
+</head>
+<body>
+    <header>
+        <h1>云贵旅游攻略</h1>
+        <p>10月9日～10月27日</p>
+    </header>
+    
+    <div class="nav-container">
+        <div class="nav" id="mainNav">
+            <a href="#dali">大理</a>
+            <a href="#lijiang">丽江</a>
+            <a href="#mangshi">芒市</a>
+            <a href="#guiyang">贵阳</a>
+        </div>
+    </div>
+    
+    <div class="container">
+        <!-- 大理部分 -->
+        <div class="city-section" id="dali">
+            <div class="city-header" style="background: linear-gradient(135deg, #1d976c, #93f9b9);">
+                大理 - 白族风情
+            </div>
+            <div class="city-content">
+                <div class="category">
+                    <h3>观光景点</h3>
+                    <p>大理古城 - 保存完好的白族风格古城</p>
+                    <p>洱海 - 高原明珠，骑行环湖最佳体验</p>
+                    <p>崇圣寺三塔 - 大理标志性佛教建筑</p>
+                </div>
+                <div class="category">
+                    <h3>美食推荐</h3>
+                    <p>乳扇 - 白族特色奶制品，可炸可烤</p>
+                    <p>酸辣鱼 - 洱海鱼烹制的特色菜肴</p>
+                    <p>喜洲粑粑 - 传统白族烤饼</p>
+                </div>
+                <div class="category">
+                    <h3>路况信息</h3>
+                    <p>古城周边道路较窄，旺季容易拥堵</p>
+                    <p>环洱海路况良好，适合骑行</p>
+                </div>
+                <div class="category">
+                    <h3>电动车租赁</h3>
+                    <p>古城南门附近有多家电动车租赁，60-100元/天</p>
+                    <p>"洱海骑行"提供电动车+充电宝组合租赁</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 丽江部分 -->
+        <div class="city-section" id="lijiang">
+            <div class="city-header" style="background: linear-gradient(135deg, #8e2de2, #4a00e0);">
+                丽江 - 纳西族风情
+            </div>
+            <div class="city-content">
+                <div class="category">
+                    <h3>观光景点</h3>
+                    <p>丽江古城 - 世界文化遗产，纳西族传统建筑</p>
+                    <p>玉龙雪山 - 壮丽的雪山景观</p>
+                    <p>束河古镇 - 比大研古镇更原生态的纳西小镇</p>
+                </div>
+                <div class="category">
+                    <h3>美食推荐</h3>
+                    <p>丽江粑粑 - 纳西族传统面食</p>
+                    <p>腊排骨火锅 - 丽江特色火锅</p>
+                    <p>鸡豆凉粉 - 纳西族特色小吃</p>
+                </div>
+                <div class="category">
+                    <h3>路况信息</h3>
+                    <p>古城内为步行区，禁止机动车通行</p>
+                    <p>通往玉龙雪山道路弯多坡陡，需谨慎驾驶</p>
+                </div>
+                <div class="category">
+                    <h3>电动车租赁</h3>
+                    <p>古城周边有电动车租赁，约80-120元/天</p>
+                    <p>"雪山电动车"提供古城至白沙古镇的骑行路线</p>
+                </div>
+            </div>
+        </div>
+        
+<!-- 芒市部分 -->
+    <div class="city-section" id="mangshi">
+        <div class="city-header" style="background: linear-gradient(135deg, #f46b45, #eea849);">
+            芒市
+        </div>
+        <div class="city-content">
+        <div class="category">
+            <h3>行程</h3>
+            <div class="day-schedule">
+                <div class="day-title">10月18日</div>
+                <div class="schedule-item">
+                    <div class="location">落地</div>
+                    <div class="travel-method">
+                        <div class="arrow">→</div>
+                        <div class="time-options">
+                            <div>(步行约10分钟)</div>
+                            <div>(打车约5分钟)</div>
+                            <div>(骑车约8分钟)</div>
+                        </div>
+                    </div>
+                    <div class="location travel-link" data-from="机场" data-to="新玩厂夜市">新玩厂夜市</div>
+                    <div class="travel-method">
+                        <div class="arrow">→</div>
+                        <div class="time-options">
+                            <div>(步行约10分钟)</div>
+                            <div>(打车约5分钟)</div>
+                        </div>
+                    </div>
+                    <div class="location travel-link" data-from="新玩厂夜市" data-to="容容家洗头">容容家洗头</div>
+                </div>
+            </div>
+
+            <div class="day-schedule">
+                <div class="day-title">10月19日</div>
+                <div class="time-note"><strong style="text-decoration: underline; color: red;">10点出门</strong></div>
+                <div class="time-period">早上：</div>
+                <div class="schedule-item">
+                    <div class="location travel-link" data-from="住处" data-to="银家早点">银家早点</div>
+                    <div class="travel-method">
+                        <div class="arrow">→</div>
+                        <div class="time-options">
+                            <div>(步行约25分钟)</div>
+                            <div>(打车约10分钟)</div>
+                            <div>(骑车约15分钟)</div>
+                        </div>
+                    </div>
+                    <div class="location travel-link" data-from="银家早点" data-to="银塔">银塔</div>
+                    <div class="travel-method">
+                        <div class="arrow">→</div>
+                        <div class="time-options">
+                            <div>(步行约10分钟)</div>
+                        </div>
+                    </div>
+                    <div class="location travel-link" data-from="银塔" data-to="团结大街">团结大街(打卡拍照)</div>
+                    <div class="travel-method">
+                        <div class="arrow">→</div>
+                        <div class="time-options">
+                            <div>(步行约15分钟)</div>
+                            <div>(打车约5分钟)</div>
+                        </div>
+                    </div>
+                    <div class="location travel-link" data-from="团结大街" data-to="宏利综合市场">宏利综合市场</div>
+                </div>
+                <div class="time-period">中午：</div>
+                <div class="food-options">
+                    <span class="food-location travel-link" data-from="宏利综合市场" data-to="爽爽苦子撒">爽爽苦子撒</span>
+                    <span class="food-separator">→</span>
+                    <span class="food-location travel-link" data-from="爽爽苦子撒" data-to="咖啡厅">咖啡厅</span>
+                </div>
+                <div class="time-period">晚上：</div>
+                <div class="schedule-item">
+                    <div class="location travel-link" data-from="住处" data-to="金塔">金塔</div>
+                    <div class="travel-method">
+                        <div class="arrow">→</div>
+                        <div class="time-options">
+                            <div>(步行约15分钟)</div>
+                            <div>(打车约5分钟)</div>
+                        </div>
+                    </div>
+                    <div class="location travel-link" data-from="金塔" data-to="容容家洗头">容容家洗头</div>
+                </div>
+            </div>
+
+            <div class="day-schedule">
+                <div class="day-title">10月20日</div>
+                <div class="time-period">早上：</div>
+                <div class="schedule-item">
+                    <div class="location travel-link" data-from="住处" data-to="蒙自风味土锅过桥米线">蒙自风味土锅过桥米线</div>
+                    <div class="travel-method">
+                        <div class="arrow">→</div>
+                        <div class="time-options">
+                            <div>(步行约20分钟)</div>
+                            <div>(打车约8分钟)</div>
+                        </div>
+                    </div>
+                    <div class="location travel-link" data-from="蒙自风味土锅过桥米线" data-to="卫宏竹编店">卫宏竹编店</div>
+                </div>
+                <div class="time-period">中午：</div>
+                <div class="food-options">
+                    <span class="food-location travel-link" data-from="卫宏竹编店" data-to="秀华建水菊花烧烤店">秀华建水菊花烧烤店</span>
+                </div>
+                <div class="time-period">晚上：</div>
+                <div class="schedule-item">
+                    <div class="location travel-link" data-from="住处" data-to="天然活螃蟹">天然活螃蟹</div>
+                    <div class="travel-method">
+                        <div class="arrow">→</div>
+                        <div class="time-options">
+                            <div>(步行约15分钟)</div>
+                            <div>(打车约5分钟)</div>
+                        </div>
+                    </div>
+                    <div class="location travel-link" data-from="天然活螃蟹" data-to="傣族古镇">傣族古镇</div>
+                    <div class="travel-method">
+                        <div class="arrow">→</div>
+                        <div class="time-options">
+                            <div>(步行约10分钟)</div>
+                            <div>(打车约5分钟)</div>
+                        </div>
+                    </div>
+                    <div class="location travel-link" data-from="傣族古镇" data-to="容容家洗头">容容家洗头</div>
+                </div>
+            </div>
+
+            <div class="day-schedule">
+                <div class="day-title">10月21日</div>
+                <div class="time-period">早上：</div>
+                <div class="schedule-item">
+                    <div class="location travel-link" data-from="住处" data-to="阿妙餐厅">阿妙餐厅</div>
+                </div>
+                <div class="time-period">中午：</div>
+                <div class="food-options">
+                    <span class="food-location travel-link" data-from="阿妙餐厅" data-to="芒店一元烧烤村">芒店一元烧烤村</span>
+                </div>
+                <div class="time-period">晚上：</div>
+                <div class="schedule-item">
+                    <div class="location travel-link" data-from="住处" data-to="钱家傣味食馆">钱家傣味食馆</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 其他分类保持不变 -->
+        <div class="category">
+        <h3>美食</h3>
+        <div class="food-category">
+            <div class="food-category-title">傣味：</div>
+            <div class="food-item">
+                爽爽苦子撒
+                <div class="food-popup">
+                    <h4 class="food-popup-title">爽爽苦子撒</h4>
+                    <img class="food-popup-image" src="爽爽苦子撒.png" alt="爽爽苦子撒">
+                    <p class="food-popup-desc">芒市最地道的傣味餐厅之一，特色菜苦子撒是当地传统美食，由苦子、猪肉和各种香料制成，味道独特，略带苦味但回味甘甜。推荐尝试他们的苦子撒和柠檬撒。</p>
+                </div>
+            </div>
+            <div class="food-item">
+                钱家傣味食馆
+                <div class="food-popup">
+                    <h4 class="food-popup-title">钱家傣味食馆</h4>
+                    <img class="food-popup-image" src="钱家.png" alt="钱家傣味食馆">
+                    <p class="food-popup-desc">老字号傣味餐厅，环境朴素但味道正宗。招牌菜有香茅草烤鱼、菠萝饭和酸笋煮鸡。价格实惠，分量足，是体验傣族家常菜的好去处。</p>
+                </div>
+            </div>
+                    <div class="food-item" data-food="梦幻傣家" data-desc="装修具有浓郁傣族风格的餐厅，提供改良版的傣族菜肴，适合不太能接受重口味的游客。推荐他们的傣味拼盘，可以一次尝到多种特色菜。" data-image="手抓饭.png">梦幻傣家</div>
+                </div>
+                
+                <div class="food-category">
+                    <div class="food-category-title">烧烤：</div>
+                    <div class="food-item" data-food="芒店一元烧烤村" data-desc="芒市著名的烧烤夜市，特色是1元一串的小肉串，种类丰富，有牛肉、猪肉、鸡翅等。环境热闹，适合晚上和朋友一起喝酒吃烧烤。" data-image="https://example.com/shaokao1.jpg">芒店一元烧烤村</div>
+                    <div class="food-item" data-food="平莹烧烤店" data-desc="本地人常去的老牌烧烤店，特色是秘制腌料的烤鱼和烤鸡脚。调料独特，辣度可选，建议尝试他们的招牌烤罗非鱼。" data-image="https://example.com/shaokao2.jpg">平莹烧烤店</div>
+                    <div class="food-item" data-food="秀华建水菊花烧烤店" data-desc="来自云南建水的特色烧烤，以菊花为配料是其独特之处。推荐尝试菊花烤豆腐和烤五花肉，蘸料是店家特制的腐乳酱。" data-image="https://example.com/shaokao3.jpg">秀华建水菊花烧烤店</div>
+                </div>
+                
+                <div class="food-category">
+                    <div class="food-category-title">小吃店：</div>
+                    <div class="food-item" data-food="莎姐很辣" data-desc="专营各种辣味小吃的店铺，招牌是凉拌芒果和辣鸡脚，辣度分为微辣、中辣和变态辣，建议初次尝试选择微辣。他们的泡鲁达(缅甸甜品)也很受欢迎。" data-image="https://example.com/xiaochi1.jpg">莎姐很辣</div>
+                    <div class="food-item" data-food="等相拌菜小吃" data-desc="主营各种凉拌菜和傣味小吃，特色是拌酸木瓜和拌米线。食材新鲜，调味酸辣开胃，适合作为开胃小菜或简餐。" data-image="https://example.com/xiaochi2.jpg">等相拌菜小吃</div>
+                </div>
+                
+                <div class="food-category">
+                    <div class="food-category-title">饭店：</div>
+                    <div class="food-item" data-food="银家早点" data-desc="芒市最受欢迎的早餐店之一，特色是稀豆粉和饵丝。稀豆粉是用豌豆磨浆煮成的糊状食物，可以搭配米线、饵丝或油条食用，是当地人最爱的早餐。" data-image="https://example.com/fandian1.jpg">银家早点</div>
+                    <div class="food-item" data-food="天然活螃蟹" data-desc="主营各种螃蟹料理的餐厅，螃蟹现点现杀，保证新鲜。招牌菜有香辣蟹、咖喱蟹和清蒸蟹，蟹黄饱满，味道鲜美。价格稍高但物有所值。" data-image="https://example.com/fandian2.jpg">天然活螃蟹</div>
+                    <div class="food-item" data-food="热源食馆" data-desc="提供家常炒菜和小锅菜的餐厅，菜品选择丰富，价格实惠。推荐他们的酸笋炒牛肉和苦瓜炒蛋，分量足，适合家庭用餐。" data-image="https://example.com/fandian3.jpg">热源食馆</div>
+                    <div class="food-item" data-food="阿妙餐厅" data-desc="环境优雅的中餐厅，菜品融合了傣族和汉族风味。招牌菜有柠檬撒撇、香茅草烤排骨和菠萝饭，摆盘精致，适合拍照。" data-image="https://example.com/fandian4.jpg">阿妙餐厅</div>
+                    <div class="food-item" data-food="胖强新派餐厅" data-desc="创新融合菜餐厅，将传统傣味与现代烹饪手法结合。推荐尝试他们的傣味披萨和香茅草烤鸡，环境舒适，服务周到。" data-image="https://example.com/fandian5.jpg">胖强新派餐厅</div>
+                    <div class="food-item" data-food="金禾饭店" data-desc="经营多年的老牌饭店，提供各类云南特色菜。招牌菜有过桥米线、汽锅鸡和宣威火腿，味道正宗，深受游客喜爱。" data-image="https://example.com/fandian6.jpg">金禾饭店</div>
+                    <div class="food-item" data-food="金英手抓饭店" data-desc="提供正宗傣族手抓饭的餐厅，将米饭和各种配菜摆放在芭蕉叶上，用手抓着吃是当地传统。分量大，适合2-3人分享。" data-image="https://example.com/fandian7.jpg">金英手抓饭店</div>
+                    <div class="food-item" data-food="蒙自风味土锅过手米线" data-desc="专营蒙自过桥米线的小店，汤底用鸡骨和猪骨熬制数小时，味道鲜美。配料丰富，有鸡肉片、火腿、鹌鹑蛋等，米线可以免费续加。" data-image="https://example.com/fandian8.jpg">蒙自风味土锅过手米线</div>
+                </div>
+                
+                <div class="food-category">
+                    <div class="food-category-title">甜点：</div>
+                    <div class="food-item" data-food="张变果饮" data-desc="芒市人气最高的果汁店，使用新鲜水果现榨，不添加糖精。招牌是牛油果奶昔和百香果汁，夏天还有各种水果冰沙供应。" data-image="https://example.com/tiandian1.jpg">张变果饮</div>
+                    <div class="food-item" data-food="鸡蛋甩粑粑" data-desc="傣族传统甜点，用鸡蛋和糯米粉制成，外酥里嫩，撒上白糖或炼乳食用。街头常见的小吃，现做现卖，热乎乎的最好吃。" data-image="https://example.com/tiandian2.jpg">鸡蛋甩粑粑</div>
+                    <div class="food-item" data-food="松花糕" data-desc="用松花粉和糯米制成的传统糕点，口感软糯，带有淡淡的松树香气。通常在清明节前后才有，是季节性很强的特色甜点。" data-image="https://example.com/tiandian3.jpg">松花糕</div>
+                </div>
+            </div>
+        <div class="category">
+            <h3>电动车租赁</h3>
+            <p>城区多家电动车租赁点，约50-80元/天</p>
+            <p>推荐"傣乡电动车行"，提供古城周边骑行地图</p>
+        </div>
+    </div>
+                 <div class="food-modal" id="foodModal">
+        <div class="food-modal-content">
+            <span class="food-modal-close" id="closeModal">&times;</span>
+            <h2 class="food-modal-title" id="modalFoodTitle"></h2>
+            <img id="modalFoodImage" class="food-modal-image" src="" alt="美食图片">
+            <p class="food-modal-desc" id="modalFoodDesc"></p>
+        </div>
+    </div>
+</div>
+        
+        <!-- 贵阳部分 -->
+        <div class="city-section" id="guiyang">
+            <div class="city-header" style="background: linear-gradient(135deg, #ff416c, #ff4b2b);">
+                贵阳 - 苗族侗族风情
+            </div>
+            <div class="city-content">
+                <div class="category">
+                    <h3>观光景点</h3>
+                    <p>青岩古镇 - 明清军事古镇，石板路古建筑</p>
+                    <p>甲秀楼 - 贵阳标志性古建筑</p>
+                    <p>花溪公园 - 城市中的自然风光</p>
+                </div>
+                <div class="category">
+                    <h3>美食推荐</h3>
+                    <p>酸汤鱼 - 贵州特色酸辣口味</p>
+                    <p>肠旺面 - 贵阳特色早餐</p>
+                    <p>丝娃娃 - 特色小吃，类似春卷</p>
+                </div>
+                <div class="category">
+                    <h3>路况信息</h3>
+                    <p>城区道路高峰期较拥堵</p>
+                    <p>通往周边景区高速公路状况良好</p>
+                </div>
+                <div class="category">
+                    <h3>电动车租赁</h3>
+                    <p>市区有多家共享电动车可供使用</p>
+                    <p>"黔行电动车"提供日租服务，60元/天</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="food-modal" id="foodModal">
+    <div class="food-modal-content">
+        <span class="food-modal-close" id="closeModal">&times;</span>
+        <h2 class="food-modal-title" id="modalFoodTitle"></h2>
+        <img id="modalFoodImage" class="food-modal-image" src="" alt="美食图片">
+        <p class="food-modal-desc" id="modalFoodDesc"></p>
+    </div>
+</div>
+    <div class="back-to-top" id="backToTop">↑</div>
+        <script>
+ window.addEventListener('scroll', function() {
+            const nav = document.getElementById('mainNav');
+            const backToTop = document.getElementById('backToTop');
+            
+            if (window.scrollY > 100) {
+                nav.classList.add('scrolled');
+                backToTop.classList.add('visible');
+            } else {
+                nav.classList.remove('scrolled');
+                backToTop.classList.remove('visible');
+            }
+        });
+        
+        // 返回顶部功能
+        document.getElementById('backToTop').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // 滚动时显示内容动画
+        function checkVisibility() {
+            const sections = document.querySelectorAll('.city-section');
+            
+            sections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (sectionTop < windowHeight - 100) {
+                    section.classList.add('visible');
+                }
+            });
+        }
+        
+        // 打车链接功能
+        document.querySelectorAll('.travel-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const from = this.getAttribute('data-from');
+                const to = this.getAttribute('data-to');
+                
+                // 创建提示元素
+                const tooltip = document.createElement('div');
+                tooltip.textContent = '正在打开打车服务...';
+                tooltip.style.position = 'fixed';
+                tooltip.style.bottom = '20px';
+                tooltip.style.left = '50%';
+                tooltip.style.transform = 'translateX(-50%)';
+                tooltip.style.backgroundColor = 'rgba(0,0,0,0.7)';
+                tooltip.style.color = 'white';
+                tooltip.style.padding = '10px 20px';
+                tooltip.style.borderRadius = '5px';
+                tooltip.style.zIndex = '1000';
+                document.body.appendChild(tooltip);
+                
+                // 3秒后移除提示
+                setTimeout(() => {
+                    document.body.removeChild(tooltip);
+                }, 3000);
+                
+                // 尝试多种打车服务URL
+                const urls = [
+                    `diditaxi://callcenter?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}`,
+                    `https://common.diditaxi.com.cn/general/webEntry?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}`,
+                    `amapuri://route/plan/?slat=&slon=&sname=${encodeURIComponent(from)}&dlat=&dlon=&dname=${encodeURIComponent(to)}&dev=0&t=0`,
+                    `https://uri.amap.com/navigation?from=&to=${encodeURIComponent(to)}&src=mypage&callnative=1`,
+                    `baidumap://map/direction?origin=${encodeURIComponent(from)}&destination=${encodeURIComponent(to)}&mode=taxi&src=webapp.travel`,
+                    `https://map.baidu.com/direction?origin=${encodeURIComponent(from)}&destination=${encodeURIComponent(to)}&mode=taxi&sy=0&index=0&target=1`
+                ];
+                
+                // 尝试打开各种打车服务
+                let success = false;
+                urls.forEach((url, index) => {
+                    if (!success && index < 3) {
+                        window.location.href = url;
+                    } else if (!success) {
+                        window.open(url, '_blank');
+                    }
+                });
+            });
+        });
+            
+
+        // 修改后的美食详情弹窗功能
+        const foodModal = document.getElementById('foodModal');
+        const modalTitle = document.getElementById('modalFoodTitle');
+        const modalImage = document.getElementById('modalFoodImage');
+        const modalDesc = document.getElementById('modalFoodDesc');
+        const closeModal = document.getElementById('closeModal');
+        
+        // 点击美食项显示详情
+        document.querySelectorAll('.food-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const foodName = this.getAttribute('data-food');
+                const foodDesc = this.getAttribute('data-desc');
+                const foodImage = this.getAttribute('data-image');
+                
+                modalTitle.textContent = foodName;
+                modalDesc.textContent = foodDesc;
+                modalImage.src = foodImage;
+                modalImage.alt = foodName;
+                
+                // 显示弹窗前禁用页面滚动
+                document.body.style.overflow = 'hidden';
+                foodModal.style.display = 'flex';
+                
+                // 滚动到弹窗顶部
+                foodModal.scrollTo(0, 0);
+            });
+        });
+        
+             document.querySelectorAll('.food-item').forEach(item => {
+            const popup = item.querySelector('.food-popup');
+            
+            item.addEventListener('click', function(e) {
+                e.stopPropagation();
+                
+                // 关闭所有其他弹窗
+                document.querySelectorAll('.food-popup').forEach(p => {
+                    if (p !== popup) p.style.display = 'none';
+                });
+                
+                // 切换当前弹窗显示状态
+                popup.style.display = popup.style.display === 'block' ? 'none' : 'block';
+            });
+        });
+        
+        // 点击页面其他位置关闭所有弹窗
+        document.addEventListener('click', function() {
+            document.querySelectorAll('.food-popup').forEach(popup => {
+                popup.style.display = 'none';
+            });
+        });
+            
+        // 点击关闭按钮隐藏弹窗
+        closeModal.addEventListener('click', function() {
+            document.body.style.overflow = ''; // 恢复页面滚动
+            foodModal.style.display = 'none';
+        });
+        
+        // 点击弹窗外部也关闭
+        foodModal.addEventListener('click', function(e) {
+            if (e.target === foodModal) {
+                document.body.style.overflow = ''; // 恢复页面滚动
+                foodModal.style.display = 'none';
+            }
+        });
+        
+        // 初始检查
+        checkVisibility();
+        
+        // 滚动时检查
+        window.addEventListener('scroll', checkVisibility);
+        
+        // 确保所有内容在加载后检查一次
+        window.addEventListener('load', checkVisibility);
+    </script>
+</body>
+</html>
