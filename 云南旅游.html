@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>云贵旅游攻略</title>
+    <style>
+        :root {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        header {
+            background: linear-gradient(135deg, #4b6cb7, #182848);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        .nav-container {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .nav {
+            display: flex;
+            justify-content: center;
+            background-color: rgba(51, 51, 51, 0.95);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        .nav.scrolled {
+            padding: 0.5rem 0;
+            background-color: rgba(40, 40, 40, 0.98);
+        }
+        .nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 2rem;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .nav a:hover {
+            color: #4b6cb7;
+            transform: translateY(-2px);
+        }
+        .nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            background-color: #4b6cb7;
+            transition: all 0.3s ease;
+        }
+        .nav a:hover::after {
+            width: 60%;
+            left: 20%;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        .city-section {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            overflow: hidden;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.6s ease;
+        }
+        .city-section.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .city-header {
+            padding: 1.5rem;
+            color: white;
+            font-size: 1.8rem;
+            transition: all 0.3s ease;
+        }
+        .city-header:hover {
+            padding-left: 2rem;
+        }
+        .city-content {
+            padding: 1.5rem;
+        }
+        .category {
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        .category:hover {
+            transform: translateX(5px);
+        }
+        h3 {
+            border-bottom: 2px solid #eee;
+            padding-bottom: 0.5rem;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+        h3:hover {
+            color: #4b6cb7;
+            border-color: #4b6cb7;
+        }
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: #333;
+            color: white;
+        }
+        
+        /* 返回顶部按钮 */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: rgba(75, 108, 183, 0.8);
+            color: white;
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            line-height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        .back-to-top:hover {
+            background-color: rgba(75, 108, 183, 1);
+            transform: translateY(-5px);
+        }
+            
+                .travel-time {
+        font-size: 0.9rem;
+        color: #666;
+        margin-left: 5px;
+    }
+    .travel-link {
+        color: #4b6cb7;
+        cursor: pointer;
+        text-decoration: underline;
+    }
+    .travel-link:hover {
+        color: #3a5a9c;
+    }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>云贵旅游攻略</h1>
+        <p>10月9日～10月27日</p>
+    </header>
+    
+    <div class="nav-container">
+        <div class="nav" id="mainNav">
+            <a href="#dali">大理</a>
+            <a href="#lijiang">丽江</a>
+            <a href="#mangshi">芒市</a>
+            <a href="#guiyang">贵阳</a>
+        </div>
+    </div>
+    
+    <div class="container">
+        <!-- 大理部分 -->
+        <div class="city-section" id="dali">
+            <div class="city-header" style="background: linear-gradient(135deg, #1d976c, #93f9b9);">
+                大理 - 白族风情
+            </div>
+            <div class="city-content">
+                <div class="category">
+                    <h3>观光景点</h3>
+                    <p>大理古城 - 保存完好的白族风格古城</p>
+                    <p>洱海 - 高原明珠，骑行环湖最佳体验</p>
+                    <p>崇圣寺三塔 - 大理标志性佛教建筑</p>
+                </div>
+                <div class="category">
+                    <h3>美食推荐</h3>
+                    <p>乳扇 - 白族特色奶制品，可炸可烤</p>
+                    <p>酸辣鱼 - 洱海鱼烹制的特色菜肴</p>
+                    <p>喜洲粑粑 - 传统白族烤饼</p>
+                </div>
+                <div class="category">
+                    <h3>路况信息</h3>
+                    <p>古城周边道路较窄，旺季容易拥堵</p>
+                    <p>环洱海路况良好，适合骑行</p>
+                </div>
+                <div class="category">
+                    <h3>电动车租赁</h3>
+                    <p>古城南门附近有多家电动车租赁，60-100元/天</p>
+                    <p>"洱海骑行"提供电动车+充电宝组合租赁</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 丽江部分 -->
+        <div class="city-section" id="lijiang">
+            <div class="city-header" style="background: linear-gradient(135deg, #8e2de2, #4a00e0);">
+                丽江 - 纳西族风情
+            </div>
+            <div class="city-content">
+                <div class="category">
+                    <h3>观光景点</h3>
+                    <p>丽江古城 - 世界文化遗产，纳西族传统建筑</p>
+                    <p>玉龙雪山 - 壮丽的雪山景观</p>
+                    <p>束河古镇 - 比大研古镇更原生态的纳西小镇</p>
+                </div>
+                <div class="category">
+                    <h3>美食推荐</h3>
+                    <p>丽江粑粑 - 纳西族传统面食</p>
+                    <p>腊排骨火锅 - 丽江特色火锅</p>
+                    <p>鸡豆凉粉 - 纳西族特色小吃</p>
+                </div>
+                <div class="category">
+                    <h3>路况信息</h3>
+                    <p>古城内为步行区，禁止机动车通行</p>
+                    <p>通往玉龙雪山道路弯多坡陡，需谨慎驾驶</p>
+                </div>
+                <div class="category">
+                    <h3>电动车租赁</h3>
+                    <p>古城周边有电动车租赁，约80-120元/天</p>
+                    <p>"雪山电动车"提供古城至白沙古镇的骑行路线</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 芒市部分 -->
+<div class="city-section" id="mangshi">
+    <div class="city-header" style="background: linear-gradient(135deg, #f46b45, #eea849);">
+        芒市
+    </div>
+    <div class="city-content">
+        <div class="category">
+            <h3>行程</h3>
+                <div style="margin-bottom: 30px;">
+                    <p style="font-size: 1.4rem; font-weight: bold; color: #333;">10月18日</p>
+                    <p style="font-size: 1.1rem; margin-top: 10px;">
+                        落地→<span class="travel-link" data-from="机场" data-to="新玩厂夜市">新玩厂夜市<span class="travel-time">(打车约15分钟/骑车约25分钟)</span></span>→<span class="travel-link" data-from="新玩厂夜市" data-to="容容家洗头">容容家洗头<span class="travel-time">(步行约10分钟/打车约5分钟)</span></span>
+                    </p>
+                </div>
+                
+                <div style="margin-bottom: 30px;">
+                    <p style="font-size: 1.4rem; font-weight: bold; color: #333;">10月19日</p>
+                    <p style="font-size: 1.1rem; margin-top: 10px;">
+                        <strong style="text-decoration: underline; color: red;">10点出门</strong><br><br>
+                        早上：<span class="travel-link" data-from="住处" data-to="银家早点">银家早点<span class="travel-time">(步行约15分钟/打车约5分钟)</span></span>→<span class="travel-link" data-from="银家早点" data-to="银塔">银塔<span class="travel-time">(步行约25分钟/打车约10分钟/骑车约15分钟)</span></span>→<span class="travel-link" data-from="银塔" data-to="团结大街">团结大街(打卡拍照)<span class="travel-time">(步行约10分钟)</span></span>→<span class="travel-link" data-from="团结大街" data-to="宏利综合市场">宏利综合市场<span class="travel-time">(步行约15分钟/打车约5分钟)</span></span><br><br>
+                        中午：爽爽苦子撒/莎姐很辣/建水菊花过桥米线/可哆咪→咖啡厅<br><br>
+                        晚上：<span class="travel-link" data-from="住处" data-to="金塔">金塔<span class="travel-time">(打车约10分钟/骑车约20分钟)</span></span>→<span class="travel-link" data-from="金塔" data-to="容容家洗头">容容家洗头<span class="travel-time">(步行约15分钟/打车约5分钟)</span></span>
+                    </p>
+                </div>
+                
+                <div style="margin-bottom: 30px;">
+                    <p style="font-size: 1.4rem; font-weight: bold; color: #333;">10月20日</p>
+                    <p style="font-size: 1.1rem; margin-top: 10px;">
+                        早上：<span class="travel-link" data-from="住处" data-to="蒙自风味土锅过桥米线">蒙自风味土锅过桥米线<span class="travel-time">(步行约10分钟/打车约5分钟)</span></span>→<span class="travel-link" data-from="蒙自风味土锅过桥米线" data-to="卫宏竹编店">卫宏竹编店<span class="travel-time">(步行约20分钟/打车约8分钟)</span></span><br><br>
+                        中午：秀华建水菊花烧烤店<br><br>
+                        晚上：<span class="travel-link" data-from="住处" data-to="天然活螃蟹">天然活螃蟹<span class="travel-time">(打车约15分钟)</span></span>→<span class="travel-link" data-from="天然活螃蟹" data-to="傣族古镇">傣族古镇<span class="travel-time">(步行约15分钟/打车约5分钟)</span></span>→<span class="travel-link" data-from="傣族古镇" data-to="容容家洗头">容容家洗头<span class="travel-time">(步行约10分钟/打车约5分钟)</span></span>
+                    </p>
+                </div>
+        </div>
+                <div class="category">
+                    <h3>观光景点</h3>
+                    <p>勐巴娜西珍奇园 - 集热带植物、奇石珍宝于一体的园林</p>
+                    <p>芒市大金塔 - 傣族佛教圣地，金光闪闪的佛塔</p>
+                    <p>树包塔 - 奇特的自然景观，树根包裹着古塔</p>
+                </div>
+                <div class="category">
+                    <h3>美食推荐</h3>
+                    <p>傣味撒撇 - 酸辣开胃的傣族特色凉菜</p>
+                    <p>菠萝饭 - 用菠萝壳盛装的香甜糯米饭</p>
+                    <p>过手米线 - 特色吃法的傣族米线</p>
+                </div>
+                <div class="category">
+                    <h3>路况信息</h3>
+                    <p>城区道路状况良好，通往瑞丽方向的高速公路畅通</p>
+                    <p>雨季需注意部分山区道路可能有滑坡风险</p>
+                </div>
+                <div class="category">
+                    <h3>电动车租赁</h3>
+                    <p>城区多家电动车租赁点，约50-80元/天</p>
+                    <p>推荐"傣乡电动车行"，提供古城周边骑行地图</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 贵阳部分 -->
+        <div class="city-section" id="guiyang">
+            <div class="city-header" style="background: linear-gradient(135deg, #ff416c, #ff4b2b);">
+                贵阳 - 苗族侗族风情
+            </div>
+            <div class="city-content">
+                <div class="category">
+                    <h3>观光景点</h3>
+                    <p>青岩古镇 - 明清军事古镇，石板路古建筑</p>
+                    <p>甲秀楼 - 贵阳标志性古建筑</p>
+                    <p>花溪公园 - 城市中的自然风光</p>
+                </div>
+                <div class="category">
+                    <h3>美食推荐</h3>
+                    <p>酸汤鱼 - 贵州特色酸辣口味</p>
+                    <p>肠旺面 - 贵阳特色早餐</p>
+                    <p>丝娃娃 - 特色小吃，类似春卷</p>
+                </div>
+                <div class="category">
+                    <h3>路况信息</h3>
+                    <p>城区道路高峰期较拥堵</p>
+                    <p>通往周边景区高速公路状况良好</p>
+                </div>
+                <div class="category">
+                    <h3>电动车租赁</h3>
+                    <p>市区有多家共享电动车可供使用</p>
+                    <p>"黔行电动车"提供日租服务，60元/天</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="back-to-top" id="backToTop">↑</div>
+    
+    <script>
+        // 滚动时显示/隐藏返回顶部按钮和改变导航栏样式
+        window.addEventListener('scroll', function() {
+            const nav = document.getElementById('mainNav');
+            const backToTop = document.getElementById('backToTop');
+            
+            if (window.scrollY > 100) {
+                nav.classList.add('scrolled');
+                backToTop.classList.add('visible');
+            } else {
+                nav.classList.remove('scrolled');
+                backToTop.classList.remove('visible');
+            }
+        });
+        
+        // 返回顶部功能
+        document.getElementById('backToTop').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // 滚动时显示内容动画
+        function checkVisibility() {
+            const sections = document.querySelectorAll('.city-section');
+            
+            sections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (sectionTop < windowHeight - 100) {
+                    section.classList.add('visible');
+                }
+            });
+        }
+            
+                // 为旅行链接添加点击事件
+    document.querySelectorAll('.travel-link').forEach(link => {
+        link.addEventListener('click', function() {
+            const from = this.getAttribute('data-from');
+            const to = this.getAttribute('data-to');
+            // 这里可以根据实际需要生成打车软件的链接
+            // 示例使用滴滴出行的URL格式（实际可能需要调整）
+            const url = `https://common.diditaxi.com.cn/general/webEntry?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}`;
+            window.open(url, '_blank');
+        });
+    });
+        
+        // 初始检查
+        checkVisibility();
+        
+        // 滚动时检查
+        window.addEventListener('scroll', checkVisibility);
+        
+        // 确保所有内容在加载后检查一次
+        window.addEventListener('load', checkVisibility);
+    </script>
+</body>
+</html>
