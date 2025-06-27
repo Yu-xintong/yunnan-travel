@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <img class="food-popup-image" src="您的食物图片路径" alt="美食图片">
     <title>云贵旅游攻略</title>
     <style>
         :root {
@@ -355,19 +356,19 @@
         }
         
         .food-popup {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            z-index: 100;
-            background-color: white;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            width: 300px;
-            max-width: 90vw;
-            border: 1px solid #ddd;
-        }
+    display: none;
+    position: absolute;
+    z-index: 1000;
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    width: 300px;
+    max-width: 90vw;
+    max-height: 60vh;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+}
         
         .food-popup-title {
             font-size: 1.3rem;
@@ -392,18 +393,18 @@
         }
         
         /* 移动端适配 */
-        @media (max-width: 768px) {
-            .food-popup {
-                width: 90vw;
-                left: 5vw;
-            }
-        }
+@media (max-width: 768px) {
+    .food-popup {
+        width: 95%;
+        max-width: none;
+    }
+}
 .food-item-container {
-            position: relative;
-            display: inline-block;
-            margin-right: 15px;
-            margin-bottom: 8px;
-        }
+    position: relative;
+    display: inline-block;
+    margin-right: 15px;
+    margin-bottom: 8px;
+}
         
         .food-item {
             display: inline-block;
@@ -459,12 +460,16 @@
         }
         
         /* 移动端适配 */
-        @media (max-width: 768px) {
-            .food-popup {
-                width: 90vw;
-                left: 5vw;
-            }
-        }
+@media (max-width: 768px) {
+    .food-popup {
+        position: fixed;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        width: 90vw;
+        max-height: 80vh;
+    }
+}
 </style>
 </head>
 <body>
@@ -573,7 +578,7 @@
                             <div>(打车约5分钟)</div>
                         </div>
                     </div>
-                    <div class="location travel-link" data-from="新玩厂夜市" data-to="容容家洗头">容容家洗头</div>
+                    <div class="location travel-link" data-from="新玩厂夜市" data-to="容容家洗头">白云洗头屋</div>
                 </div>
             </div>
 
@@ -591,14 +596,7 @@
                             <div>(骑车约15分钟)</div>
                         </div>
                     </div>
-                    <div class="location travel-link" data-from="银家早点" data-to="银塔">银塔</div>
-                    <div class="travel-method">
-                        <div class="arrow">→</div>
-                        <div class="time-options">
-                            <div>(步行约10分钟)</div>
-                        </div>
-                    </div>
-                    <div class="location travel-link" data-from="银塔" data-to="团结大街">团结大街(打卡拍照)</div>
+                    <div class="location travel-link" data-from="银家早点" data-to="团结大街">团结大街(打卡拍照)</div>
                     <div class="travel-method">
                         <div class="arrow">→</div>
                         <div class="time-options">
@@ -610,13 +608,13 @@
                 </div>
                 <div class="time-period">中午：</div>
                 <div class="food-options">
-                    <span class="food-location travel-link" data-from="宏利综合市场" data-to="爽爽苦子撒">爽爽苦子撒</span>
+                    <span class="food-location travel-link" data-from="宏利综合市场" data-to="芒杏一元烧烤村">芒杏一元烧烤村</span>
                     <span class="food-separator">→</span>
-                    <span class="food-location travel-link" data-from="爽爽苦子撒" data-to="咖啡厅">咖啡厅</span>
+                    <span class="food-location travel-link" data-from="芒杏一元烧烤村" data-to="大树咖啡">大树咖啡</span>
                 </div>
                 <div class="time-period">晚上：</div>
                 <div class="schedule-item">
-                    <div class="location travel-link" data-from="住处" data-to="金塔">金塔</div>
+                    <div class="location travel-link" data-from="大树咖啡" data-to="傣族古镇">傣族古镇</div>
                     <div class="travel-method">
                         <div class="arrow">→</div>
                         <div class="time-options">
@@ -628,46 +626,47 @@
                 </div>
             </div>
 
-            <div class="day-schedule">
-                <div class="day-title">10月20日</div>
-                <div class="time-period">早上：</div>
-                <div class="schedule-item">
-                    <div class="location travel-link" data-from="住处" data-to="蒙自风味土锅过桥米线">蒙自风味土锅过桥米线</div>
-                    <div class="travel-method">
-                        <div class="arrow">→</div>
-                        <div class="time-options">
-                            <div>(步行约20分钟)</div>
-                            <div>(打车约8分钟)</div>
-                        </div>
-                    </div>
-                    <div class="location travel-link" data-from="蒙自风味土锅过桥米线" data-to="卫宏竹编店">卫宏竹编店</div>
-                </div>
-                <div class="time-period">中午：</div>
-                <div class="food-options">
-                    <span class="food-location travel-link" data-from="卫宏竹编店" data-to="秀华建水菊花烧烤店">秀华建水菊花烧烤店</span>
-                </div>
-                <div class="time-period">晚上：</div>
-                <div class="schedule-item">
-                    <div class="location travel-link" data-from="住处" data-to="天然活螃蟹">天然活螃蟹</div>
-                    <div class="travel-method">
-                        <div class="arrow">→</div>
-                        <div class="time-options">
-                            <div>(步行约15分钟)</div>
-                            <div>(打车约5分钟)</div>
-                        </div>
-                    </div>
-                    <div class="location travel-link" data-from="天然活螃蟹" data-to="傣族古镇">傣族古镇</div>
-                    <div class="travel-method">
-                        <div class="arrow">→</div>
-                        <div class="time-options">
-                            <div>(步行约10分钟)</div>
-                            <div>(打车约5分钟)</div>
-                        </div>
-                    </div>
-                    <div class="location travel-link" data-from="傣族古镇" data-to="容容家洗头">容容家洗头</div>
-                </div>
+           <div class="day-schedule">
+    <div class="day-title">10月20日</div>
+    <div class="time-period">早上：</div>
+    <div class="schedule-item">
+        <div class="location travel-link" data-from="住处" data-to="阿妙餐厅">阿妙餐厅</div>
+        <div class="travel-method">
+            <div class="arrow">→</div>
+            <div class="time-options">
+                <div>(步行约20分钟)</div>
+                <div>(打车约8分钟)</div>
             </div>
-
+        </div>
+        <div class="location">妆造</div>
+        <div class="travel-method">
+            <div class="arrow">→</div>
+            <div class="time-options">
+                <div>(步行约15分钟)</div>
+                <div>(打车约5分钟)</div>
+            </div>
+        </div>
+        <div class="location travel-link" data-from="妆造地点" data-to="银塔">银塔拍照</div>
+    </div>
+    <div class="time-period">中午：</div>
+    <div class="food-options">
+        <span class="food-location travel-link" data-from="银塔" data-to="户撒阿昌过手米线">户撒阿昌过手米线</span>
+        <span class="food-separator">→</span>
+        <span class="food-location travel-link" data-from="户撒阿昌过手米线" data-to="卫宏竹编店">卫宏竹编店</span>
+    </div>
+    <div class="time-period">晚上：</div>
+    <div class="schedule-item">
+        <div class="location travel-link" data-from="卫宏竹编店" data-to="金塔">金塔拍照</div>
+        <div class="travel-method">
+            <div class="arrow">→</div>
+            <div class="time-options">
+                <div>(步行约10分钟)</div>
+                <div>(打车约5分钟)</div>
+            </div>
+        </div>
+        <div class="location travel-link" data-from="金塔" data-to="容容家洗头">容容家洗头</div>
+    </div>
+</div>
             <div class="day-schedule">
                 <div class="day-title">10月21日</div>
                 <div class="time-period">早上：</div>
@@ -685,62 +684,176 @@
             </div>
         </div>
 
-        <!-- 其他分类保持不变 -->
-          <div class="category">
-        <h3>美食</h3>
-        <div class="food-category">
-            <div class="food-category-title">傣味：</div>
-            <div class="food-item-container">
-                <div class="food-item">爽爽苦子撒</div>
-                <div class="food-popup">
-                    <h4 class="food-popup-title">爽爽苦子撒</h4>
-                    <img class="food-popup-image" src="./shuang.png" alt="爽爽苦子撒">
-                    <p class="food-popup-desc">芒市最地道的傣味餐厅之一，特色菜苦子撒是当地传统美食，由苦子、猪肉和各种香料制成，味道独特，略带苦味但回味甘甜。推荐尝试他们的苦子撒和柠檬撒。</p>
-                </div>
+         <!-- 修改后的美食部分 -->
+<div class="category">
+    <h3>美食</h3>
+    <div class="food-category">
+        <div class="food-category-title">傣味：</div>
+        <div class="food-item-container">
+            <div class="food-item">爽爽苦子撒</div>
+            <div class="food-popup">
+                <h4 class="food-popup-title">爽爽苦子撒</h4>
+                <img class="food-popup-image" src="shuang.png" alt="爽爽苦子撒">
+                <p class="food-popup-desc">芒市最地道的傣味餐厅之一，特色菜苦子撒是当地传统美食，由苦子、猪肉和各种香料制成，味道独特，略带苦味但回味甘甜。推荐尝试他们的苦子撒和柠檬撒。</p>
             </div>
-            <div class="food-item-container">
-                <div class="food-item">钱家傣味食馆</div>
-                <div class="food-popup">
-                    <h4 class="food-popup-title">钱家傣味食馆</h4>
-                    <img class="food-popup-image" src="/yunnan-travel-index/qian.png" alt="钱家傣味食馆">
-                    <p class="food-popup-desc">老字号傣味餐厅，环境朴素但味道正宗。招牌菜有香茅草烤鱼、菠萝饭和酸笋煮鸡。价格实惠，分量足，是体验傣族家常菜的好去处。</p>
-                </div>
+        </div>
+        <div class="food-item-container">
+            <div class="food-item">钱家傣味食馆</div>
+            <div class="food-popup">
+                <h4 class="food-popup-title">钱家傣味食馆</h4>
+                <img class="food-popup-image" src="qian.png" alt="钱家傣味食馆">
+                                    <img class="food-popup-image" src="niupahu.png" alt="钱家傣味食馆">
+                                    <img class="food-popup-image" src="youpola.png" alt="钱家傣味食馆">
+                <p class="food-popup-desc">老字号傣味餐厅，环境朴素但味道正宗。招牌菜有香茅草烤鱼、菠萝饭和酸笋煮鸡。价格实惠，分量足，是体验傣族家常菜的好去处。</p>
             </div>
-                    <div class="food-item" data-food="梦幻傣家" data-desc="装修具有浓郁傣族风格的餐厅，提供改良版的傣族菜肴，适合不太能接受重口味的游客。推荐他们的傣味拼盘，可以一次尝到多种特色菜。" data-image="手抓饭.png">梦幻傣家</div>
-                </div>
-                
-                <div class="food-category">
-                    <div class="food-category-title">烧烤：</div>
-                    <div class="food-item" data-food="芒店一元烧烤村" data-desc="芒市著名的烧烤夜市，特色是1元一串的小肉串，种类丰富，有牛肉、猪肉、鸡翅等。环境热闹，适合晚上和朋友一起喝酒吃烧烤。" data-image="https://example.com/shaokao1.jpg">芒店一元烧烤村</div>
-                    <div class="food-item" data-food="平莹烧烤店" data-desc="本地人常去的老牌烧烤店，特色是秘制腌料的烤鱼和烤鸡脚。调料独特，辣度可选，建议尝试他们的招牌烤罗非鱼。" data-image="https://example.com/shaokao2.jpg">平莹烧烤店</div>
-                    <div class="food-item" data-food="秀华建水菊花烧烤店" data-desc="来自云南建水的特色烧烤，以菊花为配料是其独特之处。推荐尝试菊花烤豆腐和烤五花肉，蘸料是店家特制的腐乳酱。" data-image="https://example.com/shaokao3.jpg">秀华建水菊花烧烤店</div>
-                </div>
-                
-                <div class="food-category">
-                    <div class="food-category-title">小吃店：</div>
-                    <div class="food-item" data-food="莎姐很辣" data-desc="专营各种辣味小吃的店铺，招牌是凉拌芒果和辣鸡脚，辣度分为微辣、中辣和变态辣，建议初次尝试选择微辣。他们的泡鲁达(缅甸甜品)也很受欢迎。" data-image="https://example.com/xiaochi1.jpg">莎姐很辣</div>
-                    <div class="food-item" data-food="等相拌菜小吃" data-desc="主营各种凉拌菜和傣味小吃，特色是拌酸木瓜和拌米线。食材新鲜，调味酸辣开胃，适合作为开胃小菜或简餐。" data-image="https://example.com/xiaochi2.jpg">等相拌菜小吃</div>
-                </div>
-                
-                <div class="food-category">
-                    <div class="food-category-title">饭店：</div>
-                    <div class="food-item" data-food="银家早点" data-desc="芒市最受欢迎的早餐店之一，特色是稀豆粉和饵丝。稀豆粉是用豌豆磨浆煮成的糊状食物，可以搭配米线、饵丝或油条食用，是当地人最爱的早餐。" data-image="https://example.com/fandian1.jpg">银家早点</div>
-                    <div class="food-item" data-food="天然活螃蟹" data-desc="主营各种螃蟹料理的餐厅，螃蟹现点现杀，保证新鲜。招牌菜有香辣蟹、咖喱蟹和清蒸蟹，蟹黄饱满，味道鲜美。价格稍高但物有所值。" data-image="https://example.com/fandian2.jpg">天然活螃蟹</div>
-                    <div class="food-item" data-food="热源食馆" data-desc="提供家常炒菜和小锅菜的餐厅，菜品选择丰富，价格实惠。推荐他们的酸笋炒牛肉和苦瓜炒蛋，分量足，适合家庭用餐。" data-image="https://example.com/fandian3.jpg">热源食馆</div>
-                    <div class="food-item" data-food="阿妙餐厅" data-desc="环境优雅的中餐厅，菜品融合了傣族和汉族风味。招牌菜有柠檬撒撇、香茅草烤排骨和菠萝饭，摆盘精致，适合拍照。" data-image="https://example.com/fandian4.jpg">阿妙餐厅</div>
-                    <div class="food-item" data-food="胖强新派餐厅" data-desc="创新融合菜餐厅，将传统傣味与现代烹饪手法结合。推荐尝试他们的傣味披萨和香茅草烤鸡，环境舒适，服务周到。" data-image="https://example.com/fandian5.jpg">胖强新派餐厅</div>
-                    <div class="food-item" data-food="金禾饭店" data-desc="经营多年的老牌饭店，提供各类云南特色菜。招牌菜有过桥米线、汽锅鸡和宣威火腿，味道正宗，深受游客喜爱。" data-image="https://example.com/fandian6.jpg">金禾饭店</div>
-                    <div class="food-item" data-food="金英手抓饭店" data-desc="提供正宗傣族手抓饭的餐厅，将米饭和各种配菜摆放在芭蕉叶上，用手抓着吃是当地传统。分量大，适合2-3人分享。" data-image="https://example.com/fandian7.jpg">金英手抓饭店</div>
-                    <div class="food-item" data-food="蒙自风味土锅过手米线" data-desc="专营蒙自过桥米线的小店，汤底用鸡骨和猪骨熬制数小时，味道鲜美。配料丰富，有鸡肉片、火腿、鹌鹑蛋等，米线可以免费续加。" data-image="https://example.com/fandian8.jpg">蒙自风味土锅过手米线</div>
-                </div>
-                
-                <div class="food-category">
-                    <div class="food-category-title">甜点：</div>
-                    <div class="food-item" data-food="张变果饮" data-desc="芒市人气最高的果汁店，使用新鲜水果现榨，不添加糖精。招牌是牛油果奶昔和百香果汁，夏天还有各种水果冰沙供应。" data-image="https://example.com/tiandian1.jpg">张变果饮</div>
-                    <div class="food-item" data-food="鸡蛋甩粑粑" data-desc="傣族传统甜点，用鸡蛋和糯米粉制成，外酥里嫩，撒上白糖或炼乳食用。街头常见的小吃，现做现卖，热乎乎的最好吃。" data-image="https://example.com/tiandian2.jpg">鸡蛋甩粑粑</div>
-                    <div class="food-item" data-food="松花糕" data-desc="用松花粉和糯米制成的传统糕点，口感软糯，带有淡淡的松树香气。通常在清明节前后才有，是季节性很强的特色甜点。" data-image="https://example.com/tiandian3.jpg">松花糕</div>
-                </div>
+        </div>
+        <div class="food-item-container">
+            <div class="food-item">梦幻傣家</div>
+            <div class="food-popup">
+                <h4 class="food-popup-title">梦幻傣家</h4>
+                <img class="food-popup-image" src="shouzhua.png" alt="梦幻傣家">
+                                     <img class="food-popup-image" src="kaoyu.png" alt="梦幻傣家">
+                <p class="food-popup-desc">装修具有浓郁傣族风格的餐厅，提供改良版的傣族菜肴，适合不太能接受重口味的游客。推荐他们的傣味拼盘，可以一次尝到多种特色菜。</p>
             </div>
+        </div>
+    </div>
+    
+    <div class="food-category">
+        <div class="food-category-title">烧烤：</div>
+        <div class="food-item-container">
+            <div class="food-item">芒店一元烧烤村</div>
+            <div class="food-popup">
+                <h4 class="food-popup-title">芒店一元烧烤村</h4>
+                <img class="food-popup-image" src="yiyuan.png" alt="芒店一元烧烤村">
+                                    <img class="food-popup-image" src="zhunaohua.jpg" alt="芒店一元烧烤村">
+                <p class="food-popup-desc">芒市著名的烧烤夜市，特色是1元一串的小肉串，种类丰富，有牛肉、猪肉、鸡翅等。环境热闹，适合晚上和朋友一起喝酒吃烧烤。</p>
+            </div>
+        </div>
+        <div class="food-item-container">
+            <div class="food-item">平莹烧烤店</div>
+            <div class="food-popup">
+                <h4 class="food-popup-title">平莹烧烤店</h4>
+                <img class="food-popup-image" src="ping.png" alt="平莹烧烤店">
+                <p class="food-popup-desc">本地人常去的老牌烧烤店，特色是秘制腌料的烤鱼和烤鸡脚。调料独特，辣度可选，建议尝试他们的招牌烤罗非鱼。</p>
+            </div>
+        </div>
+        <div class="food-item-container">
+            <div class="food-item">秀华建水菊花烧烤店</div>
+            <div class="food-popup">
+                <h4 class="food-popup-title">秀华建水菊花烧烤店</h4>
+                <img class="food-popup-image" src="xiuhua.png" alt="秀华建水菊花烧烤店">
+                <p class="food-popup-desc">来自云南建水的特色烧烤，以菊花为配料是其独特之处。推荐尝试菊花烤豆腐和烤五花肉，蘸料是店家特制的腐乳酱。</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="food-category">
+        <div class="food-category-title">小吃店：</div>
+        <div class="food-item-container">
+            <div class="food-item">莎姐很辣</div>
+            <div class="food-popup">
+                <h4 class="food-popup-title">莎姐很辣</h4>
+                <img class="food-popup-image" src="shajie.png" alt="莎姐很辣">
+                <p class="food-popup-desc">专营各种辣味小吃的店铺，招牌是凉拌芒果和辣鸡脚，辣度分为微辣、中辣和变态辣，建议初次尝试选择微辣。他们的泡鲁达(缅甸甜品)也很受欢迎。</p>
+            </div>
+        </div>
+        <div class="food-item-container">
+            <div class="food-item">等相拌菜小吃</div>
+            <div class="food-popup">
+                <h4 class="food-popup-title">等相拌菜小吃</h4>
+                <img class="food-popup-image" src="deng.png" alt="等相拌菜小吃">
+                <p class="food-popup-desc">主营各种凉拌菜和傣味小吃，特色是拌酸木瓜和拌米线。食材新鲜，调味酸辣开胃，适合作为开胃小菜或简餐。</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="food-category">
+        <div class="food-category-title">饭店：</div>
+        <div class="food-item-container">
+            <div class="food-item">银家早点</div>
+            <div class="food-popup">
+                <h4 class="food-popup-title">银家早点</h4>
+                <img class="food-popup-image" src="yin.png" alt="银家早点">
+                <p class="food-popup-desc">芒市最受欢迎的早餐店之一，特色是稀豆粉和饵丝。稀豆粉是用豌豆磨浆煮成的糊状食物，可以搭配米线、饵丝或油条食用，是当地人最爱的早餐。</p>
+            </div>
+        </div>
+        <div class="food-item-container">
+            <div class="food-item">天然活螃蟹</div>
+            <div class="food-popup">
+                <h4 class="food-popup-title">天然活螃蟹</h4>
+                <img class="food-popup-image" src="tian.png" alt="天然活螃蟹">
+                <p class="food-popup-desc">主营各种螃蟹料理的餐厅，螃蟹现点现杀，保证新鲜。招牌菜有香辣蟹、咖喱蟹和清蒸蟹，蟹黄饱满，味道鲜美。价格稍高但物有所值。</p>
+            </div>
+        </div>
+        <div class="food-item-container">
+            <div class="food-item">热源食馆</div>
+            <div class="food-popup">
+                <h4 class="food-popup-title">热源食馆</h4>
+                <img class="food-popup-image" src="re.png" alt="热源食馆">
+                <p class="food-popup-desc">提供家常炒菜和小锅菜的餐厅，菜品选择丰富，价格实惠。推荐他们的酸笋炒牛肉和苦瓜炒蛋，分量足，适合家庭用餐。</p>
+            </div>
+        </div>
+        <div class="food-item-container">
+            <div class="food-item">阿妙餐厅</div>
+            <div class="food-popup">
+                <h4 class="food-popup-title">阿妙餐厅</h4>
+                <img class="food-popup-image" src="a.png" alt="阿妙餐厅">
+                <p class="food-popup-desc">环境优雅的中餐厅，菜品融合了傣族和汉族风味。招牌菜有柠檬撒撇、香茅草烤排骨和菠萝饭，摆盘精致，适合拍照。</p>
+            </div>
+        </div>
+        <div class="food-item-container">
+            <div class="food-item">胖强新派餐厅</div>
+            <div class="food-popup">
+                <h4 class="food-popup-title">胖强新派餐厅</h4>
+                <img class="food-popup-image" src="pang.png" alt="胖强新派餐厅">
+                <p class="food-popup-desc">创新融合菜餐厅，将传统傣味与现代烹饪手法结合。推荐尝试他们的傣味披萨和香茅草烤鸡，环境舒适，服务周到。</p>
+            </div>
+        </div>
+        <div class="food-item-container">
+            <div class="food-item">金英手抓饭店</div>
+            <div class="food-popup">
+                <h4 class="food-popup-title">金英手抓饭店</h4>
+                <img class="food-popup-image" src="jinying.png" alt="金英手抓饭店">
+                <p class="food-popup-desc">提供正宗傣族手抓饭的餐厅，将米饭和各种配菜摆放在芭蕉叶上，用手抓着吃是当地传统。分量大，适合2-3人分享。</p>
+            </div>
+        </div>
+        <div class="food-item-container">
+            <div class="food-item">卢撒阿昌过手米线</div>
+            <div class="food-popup">
+                <h4 class="food-popup-title">户撒阿昌过手米线</h4>
+                <img class="food-popup-image" src="hu.png" alt="户撒阿昌过手米线">
+                <p class="food-popup-desc">专营蒙自过桥米线的小店，汤底用鸡骨和猪骨熬制数小时，味道鲜美。配料丰富，有鸡肉片、火腿、鹌鹑蛋等，米线可以免费续加。</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="food-category">
+    <div class="food-category-title">甜点：</div>
+    <div class="food-item-container">
+        <div class="food-item">张变果饮</div>
+        <div class="food-popup">
+            <h4 class="food-popup-title">张变果饮</h4>
+            <img class="food-popup-image" src="zhang.png" alt="张变果饮">
+            <p class="food-popup-desc">芒市人气最高的果汁店，使用新鲜水果现榨，不添加糖精。招牌是牛油果奶昔和百香果汁，夏天还有各种水果冰沙供应。</p>
+        </div>
+    </div>
+    <div class="food-item-container">
+        <div class="food-item">鸡蛋甩粑粑</div>
+        <div class="food-popup">
+            <h4 class="food-popup-title">鸡蛋甩粑粑</h4>
+            <img class="food-popup-image" src="ji.png" alt="鸡蛋甩粑粑">
+            <p class="food-popup-desc">傣族传统甜点，用鸡蛋和糯米粉制成，外酥里嫩，撒上白糖或炼乳食用。街头常见的小吃，现做现卖，热乎乎的最好吃。</p>
+        </div>
+    </div>
+    <div class="food-item-container">
+        <div class="food-item">松花糕</div>
+        <div class="food-popup">
+            <h4 class="food-popup-title">松花糕</h4>
+            <img class="food-popup-image" src="song.png" alt="松花糕">
+            <p class="food-popup-desc">用松花粉和糯米制成的传统糕点，口感软糯，带有淡淡的松树香气。通常在清明节前后才有，是季节性很强的特色甜点。</p>
+        </div>
+    </div>
+</div>
         <div class="category">
             <h3>电动车租赁</h3>
             <p>城区多家电动车租赁点，约50-80元/天</p>
@@ -876,30 +989,52 @@
             
 
         
-            // 美食弹窗交互逻辑
-        document.querySelectorAll('.food-item-container').forEach(container => {
-            const foodItem = container.querySelector('.food-item');
-            const popup = container.querySelector('.food-popup');
-            
-            foodItem.addEventListener('click', function(e) {
-                e.stopPropagation();
-                
-                // 关闭所有其他弹窗
-                document.querySelectorAll('.food-popup').forEach(p => {
-                    if (p !== popup) p.style.display = 'none';
-                });
-                
-                // 切换当前弹窗显示状态
-                popup.style.display = popup.style.display === 'block' ? 'none' : 'block';
-            });
+            document.querySelectorAll('.food-item-container').forEach(container => {
+    const foodItem = container.querySelector('.food-item');
+    const popup = container.querySelector('.food-popup');
+    
+    foodItem.addEventListener('click', function(e) {
+        e.stopPropagation();
+        
+        // 关闭所有其他弹窗
+        document.querySelectorAll('.food-popup').forEach(p => {
+            if (p !== popup) p.style.display = 'none';
         });
         
-        // 点击页面其他位置关闭所有弹窗
-        document.addEventListener('click', function() {
-            document.querySelectorAll('.food-popup').forEach(popup => {
-                popup.style.display = 'none';
-            });
-        });
+        if (popup.style.display === 'block') {
+            popup.style.display = 'none';
+            return;
+        }
+        
+        // 显示当前弹窗
+        popup.style.display = 'block';
+        
+        // 计算最佳显示位置
+        const itemRect = foodItem.getBoundingClientRect();
+        const popupHeight = popup.offsetHeight;
+        const viewportHeight = window.innerHeight;
+        
+        // 判断下方是否有足够空间
+        if (itemRect.bottom + popupHeight + 10 < viewportHeight) {
+            // 显示在下方
+            popup.style.top = '100%';
+            popup.style.left = '0';
+            popup.style.bottom = 'auto';
+        } else {
+            // 显示在上方
+            popup.style.bottom = '100%';
+            popup.style.top = 'auto';
+            popup.style.left = '0';
+        }
+    });
+});
+
+// 点击页面其他位置关闭所有弹窗
+document.addEventListener('click', function() {
+    document.querySelectorAll('.food-popup').forEach(popup => {
+        popup.style.display = 'none';
+    });
+});
             
         
         // 初始检查
